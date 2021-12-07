@@ -1,0 +1,155 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3><i class="far fa-address-card"></i> Setting Account</h3>
+            </div>
+
+            <div class="card-body">
+
+                <form [formGroup]="formMemberGroup" (ngSubmit)="updateMember()">
+                    <div class="form-group d-flex justify-content-center">
+                        <input type="file" accept=".png,.jpg,.jpeg" hidden #file (change)="detectFiles($event)">
+                        <!-- <img [src]="getUrlImage(currentMember.photo)" alt="" (click)="file.click()"
+                            class="avatar"> -->
+                        <ng-container *ngIf="urlAvatar != ''; else elseAvatar">
+                            <img [src]="urlAvatar" alt="" (click)="file.click()" class="avatar avatar-circle"
+                                width="100" height="100">
+                        </ng-container>
+                        <ng-template #elseAvatar>
+                            <img [src]="getUrlImage(currentMember.photo)" alt="" (click)="file.click()"
+                                class="avatar avatar-circle" width="100" height="100">
+                        </ng-template>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" placeholder="Enter email" required="" readonly>
+                    </div>
+                    <div class="form-check">
+                        <input formControlName="isShowMail" class="form-check-input" type="checkbox" value=""
+                            id="flexCheckChecked">
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Show Email
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Full Name</label>
+                        <input formControlName="fullName" type="text" class="form-control" aria-describedby="fullName"
+                            placeholder="Enter Full Name" required="">
+                        <div *ngIf="formMemberGroup.get('fullName')?.touched">
+                            <div class="text-danger" *ngIf="formMemberGroup.hasError('required', ['fullName'])">
+                                This field is required.
+                            </div>
+                            <div class="text-danger" *ngIf="formMemberGroup.hasError('minlength', ['fullName'])">
+                                Please enter at least 3 characters.
+                            </div>
+                            <div class="text-danger" *ngIf="formMemberGroup.hasError('maxlength', ['fullName'])">
+                                Please enter no more than 15 characters.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Phone</label>
+                        <input formControlName="phone" type="text" class="form-control" aria-describedby="fullName"
+                            placeholder="Enter phone" required="">
+                        <div *ngIf="formMemberGroup.get('phone')?.touched">
+                            <em class="text-danger"
+                                *ngIf="validateControl('phone') && hasError('phone', 'required')">Phone is required</em>
+                            <em class="text-danger"
+                                *ngIf="validateControl('phone') && hasError('phone', 'pattern')">Phone must be number,
+                                8-12 characters</em>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Description</label>
+                        <textarea formControlName="description" name="" id="" cols="30" rows="10"
+                            class="form-control"></textarea>
+                        <div *ngIf="formMemberGroup.get('description')?.touched">
+                            <em class="text-danger"
+                                *ngIf="validateControl('description') && hasError('description', 'required')">Description
+                                is required</em>
+                            <em class="text-danger"
+                                *ngIf="validateControl('description') && hasError('description', 'maxLength')">Maximum
+                                2000 characters</em>
+                            <em class="text-danger"
+                                *ngIf="validateControl('description') && hasError('description', 'minLength')">At least
+                                10 characters</em>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary"
+                            [disabled]="formMemberGroup.invalid">Update</button>
+                        <!-- <ng-container *ngIf="currentMember.roleId==1;">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#changePasswordSendMail">Email Password</button>
+                        </ng-container> -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#changePassword">Change Password</button>
+                    </div>
+                </form>
+
+            </div>
+        </div><!-- end card-->
+    </div>
+</div>
+
+<!-- Modal Change Password-->
+<div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formPasswordGroup">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Old Password</label>
+                        <input formControlName="oldPassword" type="password" class="form-control" required>
+                        <div *ngIf="formPasswordGroup.get('oldPassword')?.touched">
+                            <em class="text-danger"
+                                *ngIf="validateControlPassword('oldPassword') && hasErrorPassword('oldPassword', 'required')">Password
+                                is required</em>
+                            <em class="text-danger"
+                                *ngIf="validateControlPassword('oldPassword') && hasErrorPassword('oldPassword', 'pattern')">Require more than 6 characters that contain at least one uppercase, one lower case and one number</em>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">New Password</label>
+                        <input formControlName="newPassword" type="password" class="form-control" required
+                            aria-describedby="newPassword">
+                        <div *ngIf="formPasswordGroup.get('newPassword')?.touched">
+                            <em class="text-danger"
+                                *ngIf="validateControlPassword('newPassword') && hasErrorPassword('newPassword', 'required')">New
+                                Password is required</em>
+                            <em class="text-danger"
+                                *ngIf="validateControlPassword('newPassword') && hasErrorPassword('newPassword', 'pattern')">Require more than 6 characters that contain at least one uppercase, one lower case and one number</em>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Confirm Password</label>
+                        <input formControlName="confirmPassword" type="password" class="form-control" required
+                            aria-describedby="confirmPassword">
+                        <div *ngIf="formPasswordGroup.get('newPassword')?.touched">
+                            <em class="text-danger"
+                                *ngIf="validateControlPassword('newPassword') && hasErrorPassword('newPassword', 'required')">Confirm
+                                Password is required</em>
+                            <em class="text-danger"
+                                *ngIf="validateControlPassword('newPassword') && hasErrorPassword('newPassword', 'pattern')">Require more than 6 characters that contain at least one uppercase, one lower case and one number</em>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" (click)="changePassword()"
+                        [disabled]="formPasswordGroup.invalid">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

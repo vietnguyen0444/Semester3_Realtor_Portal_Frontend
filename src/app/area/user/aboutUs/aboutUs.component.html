@@ -1,0 +1,244 @@
+<section class="w3l-about-breadcrumb">
+    <div class="breadcrumb-bg breadcrumb-bg-about pt-5">
+        <div class="container pt-lg-5 py-3">
+        </div>
+    </div>
+</section>
+<section class="w3l-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumbs-custom-path">
+            <li><a href="index.html">Home</a></li>
+            <li class="active"><span class="fa fa-angle-right mx-2" aria-hidden="true"></span> Pages</li>
+            <li class="active"><span class="fa fa-angle-right mx-2" aria-hidden="true"></span> About Us</li>
+        </ul>
+    </div>
+</section>
+<section class="w3l-index3" id="about">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="row">
+            <div class="container mt-sm-30 mt-30 mb-5">
+                <div class="col-xl-12">
+                    <div class="card card-lg">
+                        <h3 class="card-header border-bottom-0">
+                            <b>FAQ</b>
+                        </h3>
+                        <div class="accordion accordion-type-2 accordion-flush" id="accordion_2">
+                            <ng-container *ngFor="let faq of listFAQ; index as i">
+                                <ng-container *ngIf="i === 0; else elseFAQ">
+                                    <div class="card">
+                                        <div class="h5 card-header d-flex justify-content-between">
+                                            <a role="button" data-toggle="collapse" href="#collapse_{{faq.faqId}}"
+                                                aria-expanded="true">{{faq.title}}</a>
+                                        </div>
+                                        <div id="collapse_{{faq.faqId}}" class="collapse show"
+                                            data-parent="#accordion_2" role="tabpanel">
+                                            <div class="card-body pa-15 h6">{{faq.description}}</div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-template #elseFAQ>
+                                    <div class="card">
+                                        <div class="h5 card-header d-flex justify-content-between"><a role="button"
+                                                data-toggle="collapse" aria-expanded="false"
+                                                href="#collapse_{{faq.faqId}}" class="collapsed">{{faq.title}}</a>
+                                        </div>
+                                        <div id="collapse_{{faq.faqId}}" class="collapse" data-parent="#accordion_2"
+                                            role="tabpanel">
+                                            <div class="card-body pa-15 h6">{{faq.description}}</div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+    <div class="midd-w3 py-5">
+        <div class="container py-lg-5 py-md-4 py-2">
+            <div class="grids-area-hny row mt-5 pt-lg-5 pt-5">
+                <div class="col-lg-4 col-md-6 grids-feature">
+                    <div class="area-box">
+                        <span class="fa fa-home"></span>
+                        <h4><a class="title-head">Guidance you need</a></h4>
+                        <p>Vivamus a ligula quam tesque et libero ut justo, ultrices in. Ut eu leo non. Duis sed et
+                            dolor amet.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 grids-feature mt-md-0 mt-4">
+                    <div class="area-box">
+                        <span class="fa fa-search-plus"></span>
+                        <h4><a class="title-head">Search that feels familiar</a></h4>
+                        <p>Vivamus a ligula quam tesque et libero ut justo, ultrices in. Ut eu leo non. Duis sed dolor
+                            et amet.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 grids-feature mt-lg-0 mt-4">
+                    <div class="area-box">
+                        <span class="fa fa-dollar"></span>
+                        <h4><a class="title-head">Premium values</a></h4>
+                        <p>Vivamus a ligula quam tesque et libero ut justo, ultrices in. Ut eu leo non. Duis sed dolor
+                            et amet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="w3l-aboutblock2" id="why">
+    <div class="midd-w3 py-5">
+        <div class="container py-lg-5 py-md-4 py-2">
+            <div class="row" *ngFor="let aboutus of setting">
+                <div class="col-lg-6 left-wthree-img">
+                    <img [src]="getUrlImage('user',aboutus.thumbnailAboutUs)" alt="" class="img-fluid radius-image" />
+                </div>
+                <div class="col-lg-6 mt-lg-0 mt-5 align-self">
+                    <h6 class="title-small">Why us</h6>
+                    <h3 class="title-big">{{aboutus.aboutUsTitle}}</h3>
+                    <p class="mt-4">{{aboutus.description}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="w3l-agentsblock py-5" id="team">
+    <div class="container py-lg-5 py-md-4 py-2">
+        <h6 class="title-small text-center">Our team</h6>
+        <h3 class="title-big text-center mb-lg-5 mb-4">Meet our Agents</h3>
+        <!-- block -->
+        <div class="row">
+            <ng-container *ngFor="let p  of agents">
+                <div class="col-lg-3 col-sm-6 column-item">
+                    <div class="users_box">
+                        <div class="user-avatar">
+                            <a [routerLink]="[ '/user/detailMember', { Id: p.memberId } ]" class="nav-link avatar">
+                                <img [src]="getUrlImage('member',p.photo)" alt="" class="img-fluid w-100 radius-image">
+                            </a>
+
+                        </div>
+                        <div class="users_box_info">
+                            <p class="user_position">Selling Agent</p>
+                            <h4 class="user_title agent">
+                                <a [routerLink]="[ '/user/detailMember', { Id: p.memberId } ]">{{p.fullName}}</a>
+                            </h4>
+                            <div class="user_meta user_phone">
+                                <span class="phone-detail"> <a href="tel:+1-2345-678-11">{{p.phone}}</a></span>
+                            </div>
+                            <a [routerLink]="[ '/user/detailMember', { Id: p.memberId } ]"
+                                class=" nav-link btn btn-outline-primary btn-style mt-4">
+                                View Profile </a>
+                        </div>
+                    </div>
+                </div>
+
+            </ng-container>
+        </div>
+    </div>
+</div>
+<!-- stats -->
+<section class="w3l-stats py-5" id="stats">
+    <div class="gallery-inner container py-lg-5 py-md-4 py-2">
+        <div class="row stats-con">
+            <div class="col-md-3 col-6 stats_info counter_grid">
+                <p class="counter">{{saleCount}}</p>
+                <span class="plus">+</span><br>
+                <h3>Homes for sale</h3>
+            </div>
+            <div class="col-md-3 col-6 stats_info counter_grid1">
+                <p class="counter">{{rentCount}}</p>
+                <span class="plus">+</span><br>
+                <h3>Homes for rent</h3>
+            </div>
+            <div class="col-md-3 col-6 stats_info counter_grid mt-md-0 mt-4" *ngFor="let set of setting">
+                <p class="counter">{{set.numProperty}}</p>
+                <span class="plus">+</span><br>
+                <h3>Recently sold</h3>
+            </div>
+            <div class="col-md-3 col-6 stats_info counter_grid2 mt-md-0 mt-4">
+                <p class="counter">145 </p>
+                <span class="plus">k</span><br>
+                <h3>Happy Clients </h3>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //stats -->
+
+<!-- contacts -->
+<section class="w3l-contact-7 pt-5" id="contact">
+    <div class="contacts-9 pt-lg-5 pt-md-4">
+        <div class="container">
+            <div class="top-map">
+                <div class="row map-content-9">
+                    <div class="col-lg-8">
+                        <div class="contact-form">
+                            <h5 class="mb-2">Get in touch</h5>
+                            <p class="mb-4"></p>
+
+                            <form novalidate="" action="https://sendmail.w3layouts.com/submitForm" method="post"
+                                class="ng-untouched ng-pristine ng-valid " [formGroup]="formContact">
+                                <div class="form-group">
+                                    <div class="form-grid">
+                                        <div class="input-field">
+                                            <input type="text" name="w3lName" id="w3lName" placeholder="Your Name"
+                                                required formControlName="fullName">
+                                        </div>
+                                        <div class="input-field">
+                                            <input type="text" name="w3lSender" id="w3lSender" placeholder="Phone"
+                                                required formControlName="phone">
+                                            <div *ngIf="Phone.touched && Phone.invalid" class="text-danger">
+                                                <small *ngIf="Phone.errors.required">Mobile
+                                                    Number is required.</small>
+                                                <small *ngIf="Phone.errors.pattern">Please, Enter
+                                                    10 digit Mobile Number.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-field mt-4"><textarea name="w3lMessage" id="w3lMessage"
+                                            placeholder="Message" formControlName="message"></textarea>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary btn-style mt-2" (click)="send()"
+                                        [disabled]="!formContact.valid">Submit</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 cont-details" *ngFor="let l of setting">
+
+                        <address>
+                            <h5 class="">Our Office Address</h5>
+                            <p><span class="fa fa-map-marker"></span> {{l.address}}</p>
+
+                            <h5 class="mt-4 pt-lg-3">Phone informatiom</h5>
+                            <ng-container *ngFor="let phonea of l.phone.split(',')">
+                                <p><span class="fa fa-mobile"></span> <strong>Phone : </strong>
+                                    <a href="tel:{{phonea}}">{{phonea}}</a>
+                                </p>
+                            </ng-container>
+
+                            <!-- <p><span class="fa fa-phone"></span> <strong>Tel : </strong>
+                                <a href="tel:{{l.phone}}">{{l.phone}}</a>
+                            </p> -->
+                            <ng-container *ngFor="let emaila of l.email.split(',')">
+                                <p> <span class="fa fa-envelope"></span> <strong>Email : </strong>
+                                    <a href="mailto:{{emaila}}"> {{emaila}}</a>
+                                </p>
+                            </ng-container>
+                            
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</section>
+<!-- //contacts -->

@@ -1,0 +1,219 @@
+<div id="main">
+
+    <!-- top bar navigation -->
+    <div class="headerbar">
+
+        <!-- LOGO -->
+        <div class="headerbar-left">
+            <a [routerLink]="['/admin/dashboard']" class="logo">
+                <img alt="Logo" src="assets/images/logo.png" />
+                <span>Realtor Portal</span>
+            </a>
+        </div>
+
+        <nav class="navbar-custom">
+
+            <ul class="list-inline float-right mb-0">
+
+                <li class="list-inline-item dropdown notif user-hover">
+                    <a class="nav-link dropdown-toggle nav-user">
+                        <img [src]="getUrlImage(currentMember.photo)" alt="Profile image" class="avatar-rounded">
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown"
+                        style="will-change: transform; position: absolute; transform: translate3d(-109px, 50px, 0px); top: 0px; left: 0px;"
+                        x-placement="bottom-end">
+                        <div class="dropdown-item noti-title">
+                            <h5 class="text-overflow"><small>Hello, {{currentMember.username}}</small></h5>
+                        </div>
+                        <a [routerLink]="['/admin/profile']" class="dropdown-item notify-item"><i
+                                class="fas fa-user"></i><span>Profile</span></a>
+                        <a [routerLink]="['/user/index']" class="dropdown-item notify-item" style="cursor: pointer;"><i class="fas fa-home"></i><span>Go Home</span></a>
+                        <a (click)="logout()" class="dropdown-item notify-item" style="cursor: pointer;"><i class="fas fa-power-off"></i><span>Logout</span></a>
+                    </div>
+
+                </li>
+
+            </ul>
+
+            <ul class="list-inline menu-left mb-0">
+                <li class="float-left">
+                    <button class="button-menu-mobile open-left">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </li>
+            </ul>
+
+        </nav>
+
+    </div>
+    <!-- End Navigation -->
+
+    <!-- Left Sidebar -->
+    <div class="left main-sidebar">
+
+        <div class="sidebar-inner leftscroll">
+
+            <div id="sidebar-menu">
+
+                <ul>
+                    <li class="submenu">
+                        <a [routerLink]="['/admin/dashboard']">
+                            <i class="fas fa-bars"></i>
+                            <span> Dashboard </span>
+                        </a>
+                    </li>
+
+                    <li class="submenu" *ngIf="userRole == 'SuperAdmin'">
+                        <a [routerLink]="['/admin/manageMember']">
+                            <i class="fas fa-users"></i>
+                            <span> Members </span>
+                        </a>
+                    </li>
+
+                    <li class="submenu" *ngIf="userRole == 'SuperAdmin' || userRole == 'Admin'">
+                        <a [routerLink]="['/admin/mailbox']">
+                            <ng-container *ngIf="unReadMailBox !== 0">
+                                <span class="label radius-circle bg-danger float-right">{{unReadMailBox}}</span>
+                            </ng-container>
+                            <i class="fas fa-envelope"></i>
+                            <span> Mail box </span>
+                        </a>
+                    </li>
+
+
+                    <li class="submenu" *ngIf="userRole == 'SuperAdmin'">
+                        <a [routerLink]="['/admin/manageInvoiceAdPackage']">
+                            <i class="fab fa-wpforms"></i>
+                            <span> Admin Invoices </span>
+                        </a>
+
+                    </li>
+
+                    <li class="submenu" *ngIf="userRole == 'SuperAdmin'">
+                        <a [routerLink]="['/admin/adminManage']">
+                            <span class="label radius-circle bg-danger float-right">{{count}} new</span>
+                            <i class="fas fa-envelope"></i>
+                            <span> Manage Property</span>
+                        </a>
+                    </li>
+
+                    <li class="submenu" *ngIf="userRole == 'Admin'">
+                        <a>
+                            <i class="fas fa-building"></i>
+                            <span> Property </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a [routerLink]="['/admin/userManage']">Manage Property</a>
+                            </li>
+                            <li>
+                                <a [routerLink]="['/admin/addProperty']">Add New Property</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="submenu" *ngIf="userRole == 'SuperAdmin'">
+                        <a [routerLink]="['/admin/manageAdPackage']">
+                            <i class="fas fa-envelope"></i>
+                            <span> Manage Ad Package</span>
+                        </a>
+                    </li>
+
+                    <li class="submenu" *ngIf="userRole == 'Admin'">
+                        <a [routerLink]="['/admin/adPackage']">
+                            <i class="fas fa-envelope"></i>
+                            <span> Ad Package</span>
+                        </a>
+                    </li>
+
+
+                    <li class="submenu" *ngIf="userRole == 'SuperAdmin'">
+                        <a [routerLink]="['/admin/manageNews']">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Manage News </span>
+                        </a>
+                    </li>
+
+                    <li class="submenu" *ngIf="userRole == 'SuperAdmin'">
+                        <a [routerLink]="['/admin/faq']">
+                            <i class="fas fa-question-circle"></i>
+                            <span> FAQ </span>
+                        </a>
+                    </li>
+
+                    <li class="submenu" *ngIf="userRole == 'SuperAdmin'">
+                        <a [routerLink]="['/admin/reports']">
+                            <i class="fas fa-chart-bar"></i>
+                            <span> Reports </span>
+                        </a>
+                    </li>
+
+                    <li class="submenu" *ngIf="userRole == 'SuperAdmin'">
+                        <a [routerLink]="['/admin/setting']">
+                            <i class="fas fa-cogs"></i>
+                            <span> Setting </span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="clearfix"></div>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+        </div>
+
+    </div>
+    <!-- End Sidebar -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="breadcrumb-holder">
+                            <h1 class="main-title float-left">Dashboard</h1>
+                            <ol class="breadcrumb float-right">
+                                <li class="breadcrumb-item">Home</li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- MAIN CONTENT STAR -->
+                <!-- <a class="btn btn-primary" href="#" role="button" id="example1">Show alert</a> -->
+                <router-outlet></router-outlet>
+                <!-- MAIN CONTENT END -->
+
+            </div>
+            <!-- END container-fluid -->
+
+        </div>
+        <!-- END content -->
+
+    </div>
+    <!-- END content-page -->
+
+    <a id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i
+            class="fas fa-chevron-up"></i></a>
+
+    <footer class="footer">
+        <span class="text-right">
+            Copyright <a target="_blank" href="#">Company</a>
+        </span>
+        <span class="float-right">
+            <!-- Copyright footer link MUST remain intact if you download free version. -->
+            <!-- You can delete the links only if you purchased the pro or extended version. -->
+            <!-- Purchase the pro or extended version with PHP version of this template: https://bootstrap24.com/template/nura-admin-4-free-bootstrap-admin-template -->
+            Powered by <a target="_blank"><b>Somebody</b></a>
+        </span>
+    </footer>
+
+</div>
+<!-- END main -->
